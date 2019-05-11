@@ -2,5 +2,5 @@
 
 class MyClass:
     x = 5
-    name = "thisName"
+    stranger = "stranger"
     

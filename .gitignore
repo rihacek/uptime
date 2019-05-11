@@ -1,4 +1,4 @@
-secrets.py
+config.py
 venv/
 __pycache__/
 *.pyc
