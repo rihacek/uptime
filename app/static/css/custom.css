@@ -1,5 +1,23 @@
+
+
 .container {
     max-width: 800px; }
+    /* JR Custom */
+  .legend {
+    opacity: 0.3;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 5%;
+  }
+  .spacer {
+    background: #bbb;
+    flex: 1;
+    height: 1px;
+    display: block;
+    margin: 0.75rem 1rem 0 1rem;
+  }
+  /*end JR Custom*/
   .header {
     margin-top: 6rem;
     text-align: center; }
@@ -223,3 +241,4 @@
     .popover-item:first-child .popover-link:hover:after {
       border-bottom-color: #33C3F0; }
   }
+
