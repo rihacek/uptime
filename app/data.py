@@ -30,7 +30,15 @@ class DBHelper:
         self.cur.execute(sql)
         self.__disconnect__()
 
-#give this a shot
+class System:
+
+    def __init__(self, systemData):
+        systemID = systemData["ID"]
+        systemName = systemData["Name"]
+        description = systemData["Description"]
+        parent = systemData["ParentID"] #refactor later to parent system object instead of reference
+
+
 class SystemDAO(object):
     __db = None;
 
@@ -38,4 +46,9 @@ class SystemDAO(object):
         self.__db = DBHelper()
 
     def getSystems(self):
-        return self.__db.fetch("SELECT * FROM System")
+        results = self.__db.fetch("SELECT * FROM uptime.system")
+        systems = []
+        for i in results:
+            systems.append(System(i))
+        return systems
+

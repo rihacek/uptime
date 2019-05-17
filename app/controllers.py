@@ -1,12 +1,15 @@
 from app import app
 from flask import render_template
-from app.models import MyClass
-from app import data
+from app import data #maybe look at refactoring this out later 2019-05-15
+from app import models
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('index.html')
+    thisDash = models.Dashboard()
+    return render_template('index.html', dashboard = thisDash)
+    #create new dashboard object
+    #call db and assign dashboard model's systems array to 
     
 @app.route('/hello')
 def hello_stranger():
