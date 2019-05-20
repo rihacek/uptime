@@ -33,10 +33,10 @@ class DBHelper:
 class System:
 
     def __init__(self, systemData):
-        systemID = systemData["ID"]
-        systemName = systemData["Name"]
-        description = systemData["Description"]
-        parent = systemData["ParentID"] #refactor later to parent system object instead of reference
+        self.systemID = systemData["ID"]
+        self.systemName = systemData["Name"]
+        self.description = systemData["Description"]
+        self.parent = systemData["ParentID"] #refactor later to parent system object instead of reference
 
 
 class SystemDAO(object):
@@ -46,7 +46,7 @@ class SystemDAO(object):
         self.__db = DBHelper()
 
     def getSystems(self):
-        results = self.__db.fetch("SELECT * FROM uptime.system")
+        results = self.__db.fetch("SELECT * FROM uptime.System")
         systems = []
         for i in results:
             systems.append(System(i))

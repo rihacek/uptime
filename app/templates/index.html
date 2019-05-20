@@ -62,8 +62,11 @@
 
 
 		<div class="u-full-width" style="margin-top: 5%">
+      {% for system in dashboard.systems %}
       <div>        
-        <div>Plex</div>
+          
+          <div>{{ system.systemName }}</div>
+          
         <div>
           <svg width="100%" height="34" viewBox="0 0 243 34" preserveAspectRatio="none" >
             {%for i in range(0,49)%}<rect x="{{i * 5}}" height="34" width="3" fill="#2fcc66"></rect>{%endfor%}            
@@ -76,11 +79,9 @@
           <div class="spacer"></div>
           <div>Today</div>
         </div>
-      </div>    
-      <div>HomeAssist</div>
-      <div>Wifi</div>
-      <div>Server01</div>
-      <div>Server02</div>
+      </div>
+      {% endfor %}    
+      
 		</div>
 
 
