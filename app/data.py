@@ -37,7 +37,8 @@ class System:
         self.systemName = systemData["Name"]
         self.description = systemData["Description"]
         self.parent = systemData["ParentID"] #refactor later to parent system object instead of reference
-
+        self.address = systemData["Address"]
+        self.pingtype = systemData["Type"]
 
 class SystemDAO(object):
     __db = None;
@@ -46,9 +47,13 @@ class SystemDAO(object):
         self.__db = DBHelper()
 
     def getSystems(self):
-        results = self.__db.fetch("SELECT * FROM uptime.System")
+        sql         = "select s.ID, s.Name, s.Description, s.ParentID, c.Type, c.Address "
+        sql = sql   + "from uptime.system as s "
+        sql = sql   + "inner join uptime.connection as c "
+        sql = sql   + "on s.ID = c.SystemID;"
+
+        results = self.__db.fetch(sql)
         systems = []
         for i in results:
             systems.append(System(i))
         return systems
-
