@@ -31,7 +31,7 @@ class DBHelper:
         self.__disconnect__()
 
 class System:
-
+    
     def __init__(self, systemData):
         self.systemID = systemData["ID"]
         self.systemName = systemData["Name"]
@@ -39,6 +39,15 @@ class System:
         self.parent = systemData["ParentID"] #refactor later to parent system object instead of reference
         self.address = systemData["Address"]
         self.pingtype = systemData["Type"]
+
+class Response:
+    
+    def __init__(self, responseData):
+        self.responseID = responseData["ID"]
+        self.systemID = responseData["SystemID"]
+        self.statusID = responseData["StatusID"] #todo: include lookup work in source query
+        self.callTime = responseData["CallTime"]
+        self.duration = responseData["Duration"]
 
 class SystemDAO(object):
     __db = None;
@@ -48,8 +57,8 @@ class SystemDAO(object):
 
     def getSystems(self):
         sql         = "select s.ID, s.Name, s.Description, s.ParentID, c.Type, c.Address "
-        sql = sql   + "from uptime.system as s "
-        sql = sql   + "inner join uptime.connection as c "
+        sql = sql   + "from uptime.System as s "
+        sql = sql   + "inner join uptime.Connection as c "
         sql = sql   + "on s.ID = c.SystemID;"
 
         results = self.__db.fetch(sql)
@@ -57,3 +66,21 @@ class SystemDAO(object):
         for i in results:
             systems.append(System(i))
         return systems
+
+class ResponseDAO(object):
+    __db = None;
+        
+    def __init__(self):
+        self.__db = DBHelper()        
+
+    def getResponse(self, thisID):
+             
+        sql = "select r.ID, r.SystemID, r.StatusID, r.CallTime, r.Duration "
+        sql += "from uptime.Response as r "
+        sql += "where r.ID = " + thisID + ";"
+
+        results = self.__db.fetch(sql)
+        responses = []
+        for i in results:
+            responses.append(Response(i))
+        return responses

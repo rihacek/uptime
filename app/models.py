@@ -20,3 +20,8 @@ class PingList:
 
     def toJSON(self):
         return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=2)
+
+class Response:
+    def __init__(self, thisID):
+        __resdao = data.ResponseDAO()
+        self.results = __resdao.getResponse(thisID)

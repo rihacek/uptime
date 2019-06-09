@@ -1,5 +1,5 @@
 from app import app, models, config
-from flask import render_template, redirect
+from flask import render_template, redirect, request, abort
 import json
 
 @app.route('/')
@@ -29,4 +29,17 @@ def ping_list(pw):
     else:
         return redirect('/ping')
 
-
+@app.route('/responses/<response_id>', methods = ['GET', 'POST', 'DELETE'])
+def response(response_id):
+    if request.method == 'GET':
+        #do response id things
+        thisResponse = models.Response(response_id)
+        return render_template('response.html', thisResponse = thisResponse)
+    if request.method == 'POST':
+        #do write things
+        return redirect('/ping') #placeholder
+    if request.method == 'DELETE':
+        #remove this response
+        return redirect('/ping') #placeholder
+    else:        
+        return abort(405) #method not allowed
