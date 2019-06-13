@@ -29,19 +29,27 @@ def ping_list(pw):
     else:
         return redirect('/ping')
 
-@app.route('/responses/<this_id>', methods = ['GET', 'POST', 'DELETE'])
+@app.route('/responses/<this_id>', methods = ['GET', 'POST'])
 def response(this_id):
     if request.method == 'GET':
-        #do response id things
+        #show details for the response by id
         thisResponse = models.Response(this_id)
         return render_template('response.html', thisResponse = thisResponse)
     if request.method == 'POST':
         #create a new response for the system in the POST
         #password to post, systemid, statusid, calltime, and duration:
-        return request.form['once'] + request.form['twice']
+            pw = request.form['pw'] #== config.Secrets.pingsecret:
+            system = this_id
+            status = request.form['st']
+            time = request.form['time']
+            duration = request.form['dur']
+            
+            update_to_be    = "We're going to update System %s "%(system)
+            update_to_be   += "with Status %s, "%(status)
+            update_to_be   += "Time %s, "%(time)
+            update_to_be   += "and Duration %sms."%(duration)
 
-    if request.method == 'DELETE':
-        #remove this response
-        return redirect('/ping') #placeholder
+            return update_to_be
+        
     else:        
-        return abort(405) #method not allowed
+        return abort(405) #other methods not allowed
