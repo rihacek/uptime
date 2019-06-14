@@ -1,4 +1,4 @@
-from app import app, models, config
+from app import app, models, config, data
 from flask import render_template, redirect, request, abort
 import json
 
@@ -36,20 +36,18 @@ def response(this_id):
         thisResponse = models.Response(this_id)
         return render_template('response.html', thisResponse = thisResponse)
     if request.method == 'POST':
-        #create a new response for the system in the POST
-        #password to post, systemid, statusid, calltime, and duration:
-            pw = request.form['pw'] #== config.Secrets.pingsecret:
+        #make sure that not just anyone is posting:
+        if request.form['pw'] == config.Secrets.pingsecret:
+            #capture details for this response record    
             system = this_id
             status = request.form['st']
             time = request.form['time']
-            duration = request.form['dur']
+            duration = request.form['dur']            
             
-            update_to_be    = "We're going to update System %s "%(system)
-            update_to_be   += "with Status %s, "%(status)
-            update_to_be   += "Time %s, "%(time)
-            update_to_be   += "and Duration %sms."%(duration)
-
-            return update_to_be
-        
+            x = data.ResponseDAO()
+            newID = x.logResponse(system, status, time, duration)
+            return newID
+        else:
+            return "no good"        
     else:        
         return abort(405) #other methods not allowed

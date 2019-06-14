@@ -28,6 +28,7 @@ class DBHelper:
     def execute(self, sql):
         self.__connect__()
         self.cur.execute(sql)
+        self.con.commit()
         self.__disconnect__()
 
 class System:
@@ -84,3 +85,10 @@ class ResponseDAO(object):
         for i in results:
             responses.append(Response(i))
         return responses
+
+    def logResponse(self, sys, st, time, dur):
+
+        sql = "insert into uptime.Response (`SystemID`,`StatusID`,`CallTime`,`Duration`) "
+        sql += f"values ({sys},{st},'{time}',{dur});"
+        self.__db.execute(sql)
+        return "ok"
