@@ -89,6 +89,7 @@ class ResponseDAO(object):
     def logResponse(self, sys, st, time, dur):
 
         sql = "insert into uptime.Response (`SystemID`,`StatusID`,`CallTime`,`Duration`) "
-        sql += f"values ({sys},{st},'{time}',{dur});"
+        #sql += f"values ({sys},{st},'{time}',{dur});"
+        sql += "values ({},{},'{}',{});".format(sys, st, time, dur)
         self.__db.execute(sql)
         return "ok"
